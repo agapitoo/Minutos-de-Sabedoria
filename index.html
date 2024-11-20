@@ -3,27 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minutos de Sabedoria</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <meta name="theme-color" content="#1a0f0a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Sabedoria">
-    <link rel="apple-touch-icon" href="icons/icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180x180.png">
-    <link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167x167.png">
-    <link rel="apple-touch-startup-image" href="splash/apple-splash-2048-2732.jpg" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)">
-    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="icons/ios/180.png">
-    <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
-    <meta name="theme-color" content="#1a0f0a">
     <meta name="msapplication-TileColor" content="#1a0f0a">
-    <meta name="msapplication-TileImage" content="icons/android/android-launchericon-144-144.png">
+    <meta name="msapplication-TileImage" content="android/android-launchericon-144-144.png">
+    
+    <title>Minutos de Sabedoria</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="apple-touch-icon" href="ios/180.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="ios/180.png">
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="android/android-launchericon-72-72.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="android/android-launchericon-48-48.png">
 </head>
 <body>
     <!-- Tela inicial -->
@@ -36,6 +34,21 @@
 
     <!-- Conteúdo principal (inicialmente oculto) -->
     <div class="main-content" id="mainContent" style="display: none;">
+        <div class="container shine">
+            <h1>
+                <i class="fas fa-book-open"></i>
+                Minutos de Sabedoria
+            </h1>
+            
+            <div class="message-box">
+                <p id="message"></p>
+            </div>
+            <button id="newMessage">
+                <i class="fas fa-sync-alt"></i> Nova Reflexão
+            </button>
+        </div>
+
+        <!-- Player de áudio movido para baixo -->
         <div class="audio-player">
             <div class="audio-controls">
                 <button id="playBtn" class="control-btn">
@@ -49,20 +62,6 @@
                     <i class="fas fa-volume-up"></i>
                 </button>
             </div>
-        </div>
-
-        <div class="container shine">
-            <h1>
-                <i class="fas fa-book-open"></i>
-                Minutos de Sabedoria
-            </h1>
-            
-            <div class="message-box">
-                <p id="message"></p>
-            </div>
-            <button id="newMessage">
-                <i class="fas fa-sync-alt"></i> Nova Reflexão
-            </button>
         </div>
     </div>
 
@@ -82,7 +81,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
+                navigator.serviceWorker.register('./sw.js')
                     .then(registration => {
                         console.log('ServiceWorker registrado com sucesso:', registration.scope);
                     })

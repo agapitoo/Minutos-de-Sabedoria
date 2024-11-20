@@ -1,13 +1,19 @@
 const CACHE_NAME = 'minutos-sabedoria-v1';
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/style.css',
-    '/app.js',
-    '/piano.mp3',
-    '/manifest.json',
-    '/icons/icon-192x192.png',
-    '/icons/icon-512x512.png'
+    './',
+    './index.html',
+    './style.css',
+    './app.js',
+    './piano.mp3',
+    './manifest.json',
+    './android/android-launchericon-48-48.png',
+    './android/android-launchericon-72-72.png',
+    './android/android-launchericon-96-96.png',
+    './android/android-launchericon-144-144.png',
+    './android/android-launchericon-192-192.png',
+    './android/android-launchericon-512-512.png',
+    './ios/180.png',
+    './ios/1024.png'
 ];
 
 self.addEventListener('install', event => {
