@@ -146,4 +146,39 @@ if ('serviceWorker' in navigator) {
                 console.log('Falha ao registrar o ServiceWorker:', error);
             });
     });
-} 
+}
+
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Previne o comportamento padrão
+    e.preventDefault();
+    // Guarda o evento para usar depois
+    deferredPrompt = e;
+    // Mostra o botão de instalação
+    installBtn.style.display = 'block';
+});
+
+installBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    
+    // Mostra o prompt de instalação
+    deferredPrompt.prompt();
+    
+    // Espera pela escolha do usuário
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log(`User response to the install prompt: ${outcome}`);
+    
+    // Limpa o evento salvo
+    deferredPrompt = null;
+    
+    // Esconde o botão de instalação
+    installBtn.style.display = 'none';
+});
+
+// Esconde o botão se o app já estiver instalado
+window.addEventListener('appinstalled', () => {
+    installBtn.style.display = 'none';
+    console.log('PWA was installed');
+}); 
