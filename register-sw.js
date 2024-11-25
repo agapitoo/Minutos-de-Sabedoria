@@ -9,10 +9,4 @@ if ('serviceWorker' in navigator) {
             console.error('Erro SW:', error);
         }
     });
-}
-
-// Adicione logs para debug
-window.addEventListener('beforeinstallprompt', (e) => {
-    console.log('beforeinstallprompt disparado');
-    window.deferredPrompt = e;
-}); 
+} 

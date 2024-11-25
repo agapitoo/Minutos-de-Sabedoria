@@ -197,15 +197,25 @@ button:hover::before {
 
 .audio-controls {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 12px;
-    background: rgba(26, 15, 10, 0.85);
-    padding: 8px 20px;
-    border-radius: 30px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(212, 175, 55, 0.15);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    transform: scale(0.85);
+    gap: 10px;
+}
+
+.volume-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.buttons-container {
+    display: flex;
+    gap: 15px;
+}
+
+#volumeSlider {
+    width: 80%;
 }
 
 .control-btn {
@@ -299,6 +309,8 @@ button:hover::before {
     align-items: center;
     height: 100vh;
     padding: 20vh 0 5vh;
+    opacity: 1;
+    transition: opacity 0.8s ease-out;
 }
 
 .start-btn {
@@ -372,25 +384,18 @@ button:hover::before {
 }
 
 .fade-out {
-    animation: fadeOut 1s forwards;
+    opacity: 0;
+    transition: opacity 0.8s ease-out;
+    pointer-events: none;
 }
 
 .fade-in {
-    animation: fadeIn 1s forwards;
-}
-
-@keyframes fadeOut {
-    from { opacity: 1; }
-    to { opacity: 0; visibility: hidden; }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    opacity: 1 !important;
+    transition: opacity 0.8s ease-out;
 }
 
 .main-content {
-    opacity: 0;
+    transition: opacity 0.8s ease-out;
 }
 
 .footer {
@@ -466,5 +471,16 @@ button:hover::before {
 
 .install-btn:hover {
     background: #45a049;
+}
+
+.volume-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#volumeSlider {
+    width: 80%;  /* Ajuste este valor conforme necessário */
 }
   

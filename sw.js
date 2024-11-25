@@ -14,7 +14,7 @@ const urlsToCache = [
     './android/android-launchericon-512-512.png',
     './ios/180.png',
     './ios/1024.png'
-];
+].map(url => new URL(url, self.location.href).href);
 
 self.addEventListener('install', event => {
     event.waitUntil(
@@ -27,19 +27,17 @@ self.addEventListener('fetch', event => {
     event.respondWith(
         caches.match(event.request)
             .then(response => response || fetch(event.request))
+            .catch(() => fetch(event.request))
     );
 });
 
 self.addEventListener('activate', event => {
     event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.map(cache => {
-                    if (cache !== CACHE_NAME) {
-                        return caches.delete(cache);
-                    }
-                })
-            );
-        })
+        caches.keys()
+            .then(cacheNames => Promise.all(
+                cacheNames
+                    .filter(cache => cache !== CACHE_NAME)
+                    .map(cache => caches.delete(cache))
+            ))
     );
 }); 

@@ -55,16 +55,17 @@
         <!-- Player de áudio movido para baixo -->
         <div class="audio-player">
             <div class="audio-controls">
-                <button id="playBtn" class="control-btn">
-                    <i class="fas fa-play"></i>
-                </button>
-                <button id="stopBtn" class="control-btn">
-                    <i class="fas fa-stop"></i>
-                </button>
-                <input type="range" id="volumeSlider" min="0" max="100" value="30">
-                <button id="muteBtn" class="control-btn">
-                    <i class="fas fa-volume-up"></i>
-                </button>
+                <div class="volume-container">
+                    <input type="range" id="volumeSlider" min="0" max="100" value="30">
+                </div>
+                <div class="buttons-container">
+                    <button id="playBtn" class="control-btn">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button id="stopBtn" class="control-btn">
+                        <i class="fas fa-stop"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

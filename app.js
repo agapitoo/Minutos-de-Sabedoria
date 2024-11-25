@@ -2,24 +2,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const introScreen = document.getElementById('introScreen');
     const mainContent = document.getElementById('mainContent');
     const startBtn = document.querySelector('.start-btn');
+    const messageElement = document.getElementById('message');
     
-    startBtn.addEventListener('click', () => {
-        // Inicia a música
-        audio.play().then(() => {
-            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            playBtn.classList.add('playing');
-        });
+    // Inicializações
+    updateMessage();
+    createParticles();
+    
+    // Event Listeners
+    startBtn.addEventListener('click', handleStart);
+    document.getElementById('newMessage').addEventListener('click', () => updateMessage());
+    
+    async function handleStart() {
+        startBtn.disabled = true;
         
-        // Anima a transição
         introScreen.classList.add('fade-out');
-        mainContent.style.display = 'block';
-        mainContent.classList.add('fade-in');
         
-        // Remove a tela inicial após a animação
-        setTimeout(() => {
+        setTimeout(async () => {
             introScreen.style.display = 'none';
-        }, 1000);
-    });
+            mainContent.style.display = 'block';
+            mainContent.style.opacity = '0';
+            
+            try {
+                await audio.play();
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                playBtn.classList.add('playing');
+                mainContent.classList.add('fade-in');
+            } catch (error) {
+                console.log('Erro ao reproduzir áudio:', error);
+            } finally {
+                startBtn.disabled = false;
+            }
+        }, 800);
+    }
+    
+    function updateMessage() {
+        messageElement.textContent = messages[Math.floor(Math.random() * messages.length)];
+    }
 });
 
 const messages = [
@@ -34,24 +52,6 @@ const messages = [
     "Na simplicidade encontramos a verdadeira felicidade.",
     "Perdoar é libertar a alma de um peso desnecessário."
 ];
-
-function getRandomMessage() {
-    const randomIndex = Math.floor(Math.random() * messages.length);
-    return messages[randomIndex];
-}
-
-function updateMessage() {
-    const messageElement = document.getElementById('message');
-    messageElement.textContent = getRandomMessage();
-}
-
-// Atualiza a mensagem quando o botão é clicado
-document.getElementById('newMessage').addEventListener('click', updateMessage);
-
-// Atualiza a primeira mensagem quando o conteúdo principal for exibido
-document.addEventListener('DOMContentLoaded', () => {
-    updateMessage();
-});
 
 // Adicione no final do arquivo
 function createParticles() {
@@ -74,13 +74,10 @@ function createParticles() {
     }
 }
 
-createParticles();
-
 // Controles de áudio
 const audio = document.getElementById('bgMusic');
 const playBtn = document.getElementById('playBtn');
 const stopBtn = document.getElementById('stopBtn');
-const muteBtn = document.getElementById('muteBtn');
 const volumeSlider = document.getElementById('volumeSlider');
 
 // Define volume inicial
@@ -107,46 +104,16 @@ stopBtn.addEventListener('click', () => {
     playBtn.classList.remove('playing');
 });
 
-// Mute
-muteBtn.addEventListener('click', () => {
-    if (audio.muted) {
-        audio.muted = false;
-        muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-    } else {
-        audio.muted = true;
-        muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-    }
-    muteBtn.classList.toggle('active');
-});
-
 // Volume
 volumeSlider.addEventListener('input', () => {
     audio.volume = volumeSlider.value / 100;
-    if (audio.volume === 0) {
-        muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-    } else {
-        muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-    }
 });
 
-// Atualiza ícone de volume quando o áudio termina
+// Atualiza ícone quando o áudio termina
 audio.addEventListener('ended', () => {
     playBtn.innerHTML = '<i class="fas fa-play"></i>';
     playBtn.classList.remove('playing');
 });
-
-// Registro do Service Worker (adicione no final do arquivo)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-            .then(registration => {
-                console.log('ServiceWorker registrado com sucesso:', registration.scope);
-            })
-            .catch(error => {
-                console.log('Falha ao registrar o ServiceWorker:', error);
-            });
-    });
-}
 
 let deferredPrompt;
 const installBtn = document.getElementById('installBtn');
